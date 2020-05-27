@@ -1,24 +1,23 @@
 import pygame
 
-from minesweeper_button import MinesweeperButton
+import game_methods as gm
+from minesweeper_board import MinesweeperBoard
 
 pygame.init()
 
+pygame.display.set_caption("Minesweeper")
 window = pygame.display.set_mode((500, 500))
-
-pygame.display.set_caption("First Game")
-
-button = MinesweeperButton(5, 5)
+board = MinesweeperBoard(10, 10)
 
 run = True
 while run:
     pygame.time.delay(100)
+    mouse = pygame.mouse.get_pos()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
 
-    pygame.draw.rect(window, (212, 213, 214), (button.x, button.y, button.width, button.height))
-    pygame.display.update()
+    gm.draw_board(window, board)
 
 pygame.quit()
