@@ -1,6 +1,6 @@
 import pygame
 
-from minesweeper_button import MinesweeperButton
+from minesweeper_board import MinesweeperBoard
 
 pygame.init()
 
@@ -8,7 +8,7 @@ window = pygame.display.set_mode((500, 500))
 
 pygame.display.set_caption("First Game")
 
-button = MinesweeperButton(5, 5)
+board = MinesweeperBoard(10, 10)
 
 run = True
 while run:
@@ -18,7 +18,13 @@ while run:
         if event.type == pygame.QUIT:
             run = False
 
-    pygame.draw.rect(window, (212, 213, 214), (button.x, button.y, button.width, button.height))
-    pygame.display.update()
+    for i in range(board.rows):
+        for j in range(board.columns):
+            pygame.draw.rect(window, board.buttons[i][j].color,
+                             (board.buttons[i][j].x, board.buttons[i][j].y,
+                              board.buttons[i][j].width, board.buttons[i][j].height))
+            pygame.display.update()
+    # pygame.draw.rect(window, button.color, (button.x, button.y, button.width, button.height))
+    # pygame.display.update()
 
 pygame.quit()
