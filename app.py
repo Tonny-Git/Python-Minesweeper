@@ -1,12 +1,14 @@
 import pygame
 
+import game_menu as menu
 import game_methods as gm
 from minesweeper_board import MinesweeperBoard
 
 pygame.init()
 
 pygame.display.set_caption("Minesweeper")
-window = pygame.display.set_mode((500, 500))
+# window = pygame.display.set_mode((500, 500))
+window = menu.start_menu()
 board = MinesweeperBoard(10, 10)
 
 run = True
@@ -18,6 +20,6 @@ while run:
         if event.type == pygame.QUIT:
             run = False
 
-    gm.draw_board(window, board)
+    # gm.draw_board(window, board)
 
 pygame.quit()
