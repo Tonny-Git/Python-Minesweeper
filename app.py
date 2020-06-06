@@ -1,9 +1,14 @@
-import pygame
+# import tkinter as tk
 
-import game_menu as menu
-import game_methods as gm
-from minesweeper_board import MinesweeperBoard
+from root import Root
+from game_menu import Menu
 
+root = Root()
+menu = Menu(root)
+
+menu.root.mainloop()
+
+"""
 pygame.init()
 
 pygame.display.set_caption("Minesweeper")
@@ -23,3 +28,4 @@ while run:
     # gm.draw_board(window, board)
 
 pygame.quit()
+"""
