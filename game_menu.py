@@ -9,24 +9,23 @@ class Menu:
 
     def __init__(self, root):
         self.root = root
+        self.button = tk.Button(self.root, text="Start Game", command=self.start_game)
         self.start_menu()
 
     def start_menu(self):
-        # frame = tk.Frame(self.root, height=500, width=500, bg="white").pack()
-        button = tk.Button(self.root, text="Start Game", command=self.start_game)
-        button.place(relx=0.45, rely=0.5)
-        pass
+        self.button.place(relx=0.45, rely=0.5)
 
     def start_game(self):
-        self.root.
+        self.button.place_forget()
         board = MinesweeperBoard(10, 10)
         x = 0
         y = 0
         print("Hello")
         for i in range(board.rows):
             for j in range(board.columns):
-                tk.Button(self.root, bg=board.buttons[i][j].color).place(x=board.buttons[i][j].x, y=board.buttons[i][j].y)
-                # pass
+                tk.Button(self.root, bg=board.buttons[i][j].color, padx=10, pady=3)\
+                    .place(x=board.buttons[i][j].x, y=board.buttons[i][j].y)
+                
 
 
 
