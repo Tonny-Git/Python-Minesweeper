@@ -20,12 +20,11 @@ class Menu:
         board = MinesweeperBoard(10, 10)
         x = 0
         y = 0
-        print("Hello")
         for i in range(board.rows):
             for j in range(board.columns):
                 tk.Button(self.root, bg=board.buttons[i][j].color, padx=10, pady=3)\
                     .place(x=board.buttons[i][j].x, y=board.buttons[i][j].y)
-                
+
 
 
 
