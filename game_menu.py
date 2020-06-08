@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 
 from root import Root
 import game_methods as gm
@@ -11,19 +12,28 @@ class Menu:
         self.root = root
         self.button = tk.Button(self.root, text="Start Game", command=self.start_game)
         self.start_menu()
+        self.board = []
+        # This image fixes button size to pixels instead of text
+        self.image = tk.PhotoImage(width=1, height=1)
 
     def start_menu(self):
         self.button.place(relx=0.45, rely=0.5)
 
     def start_game(self):
         self.button.place_forget()
-        board = MinesweeperBoard(10, 10)
-        x = 0
-        y = 0
-        for i in range(board.rows):
-            for j in range(board.columns):
-                tk.Button(self.root, bg=board.buttons[i][j].color, padx=10, pady=3)\
-                    .place(x=board.buttons[i][j].x, y=board.buttons[i][j].y)
+        self.board = MinesweeperBoard(10, 10)
+        # x = 0
+        # y = 0
+        for i in range(self.board.rows):
+            for j in range(self.board.columns):
+                button = tk.Button(self.root, image=self.image, bg=self.board.buttons[i][j].color,
+                                   width=22, height=22, text=" ", compound="c")
+                button.config(command=lambda btn=button, board_btn=self.board.buttons[i][j]: self.push_button(btn, board_btn))
+                button.place(x=self.board.buttons[i][j].x, y=self.board.buttons[i][j].y)
+
+    def push_button(self, button, board_button):
+        button.config(text=board_button.value, state=tk.DISABLED)
+
 
 
 

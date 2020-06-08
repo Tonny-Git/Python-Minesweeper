@@ -7,3 +7,5 @@ class MinesweeperButton:
         self.color = "#d4d5d6"
         self.width = 25
         self.height = 25
+        # Ska införas senare
+        self.value = "X"
