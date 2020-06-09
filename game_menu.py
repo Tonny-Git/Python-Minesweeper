@@ -1,8 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
 
-from root import Root
-import game_methods as gm
 from minesweeper_board import MinesweeperBoard
 
 
@@ -19,6 +16,7 @@ class Menu:
     def start_menu(self):
         self.button.place(relx=0.45, rely=0.5)
 
+    # removes start button and adds minesweeper buttons
     def start_game(self):
         self.button.place_forget()
         self.board = MinesweeperBoard(10, 10)
