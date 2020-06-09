@@ -8,6 +8,7 @@ class Menu:
     def __init__(self, root):
         self.root = root
         self.button = tk.Button(self.root, text="Start Game", command=self.start_game)
+        self.end_button = tk.Button(self.root, text="End Game", command=lambda: self.end_game("quit"))
         self.start_menu()
         self.board = []
         self.buttons = []
@@ -20,6 +21,7 @@ class Menu:
     # removes start button and adds minesweeper buttons
     def start_game(self):
         self.button.place_forget()
+        self.end_button.place(relx=0.45, rely=0.9)
         self.board = MinesweeperBoard(10, 10)
         # x = 0
         # y = 0
@@ -68,7 +70,19 @@ class Menu:
 
     # Work on this!!!
     def end_game(self, end_condition):
-        for row in range(len(self.buttons)):
-            for col in range(len(self.buttons[row])):
+        for row in range(self.board.rows):
+            for col in range(self.board.columns):
                 self.buttons[row][col].config(state=tk.DISABLED, disabledforeground="#000000")
+        if end_condition == "won":
+            pass
+        elif end_condition == "lost":
+            pass
+        elif end_condition == "quit":
+            for row in range(self.board.rows):
+                for col in range(self.board.columns):
+                    self.buttons[row][col].destroy()
+            self.end_button.place_forget()
+            self.buttons = []
+            self.start_menu()
+
 
