@@ -37,6 +37,7 @@ class Menu:
         button.config(text=board_button.value, state=tk.DISABLED, relief=tk.RIDGE, disabledforeground="#000000")
         print(button["state"] == tk.DISABLED)
 
+    # Reveals the pressed button and if it is empty triggers all around to reveal itself.
     def reveal_buttons(self, row, col):
         self.buttons[row][col].config(text=self.board.buttons[row][col].value, state=tk.DISABLED, relief=tk.RIDGE, disabledforeground="#000000")
 
@@ -46,17 +47,28 @@ class Menu:
                     if 10 > row+i >= 0 and 10 > col+j >= 0 and self.board.buttons[row+i][col+j].value != "X" and self.buttons[row+i][col+j]["state"] != tk.DISABLED:
                         self.buttons[row+i][col+j].config(text=self.board.buttons[row+i][col+j].value, state=tk.DISABLED, relief=tk.RIDGE, disabledforeground="#000000")
                         self.reveal_buttons((row+i), (col+j))
+        self.game_status_check(row, col)
 
+    # Checks the state of game.
+    def game_status_check(self, row, col):
+        if self.board.buttons[row][col].value == "X":
+            print("lost")
+            self.end_game("lost")
+        else:
+            bombs_remaining = len(self.buttons) * len(self.buttons[0]) * 0.1
+            buttons_remaining = 0
+            for row in self.buttons:
+                for button in row:
+                    if button["state"] != tk.DISABLED:
+                        buttons_remaining += 1
 
-    # reference, remove later!
-    def button_value(self, bombs, buttons):
-        for num in bombs:
-            row = num // 10
-            col = num % 10
-            for i in range(-1, 2, 1):
-                for j in range(-1, 2, 1):
-                    if 10 > row+i >= 0 and 10 > col+j >= 0 and buttons[row+i][col+j].value != "X":
-                        if buttons[row+i][col+j].value == " ":
-                            buttons[row+i][col+j].value = 1
-                        else:
-                            buttons[row+i][col+j].value += 1
+            if bombs_remaining == buttons_remaining:
+                print("won")
+                self.end_game("won")
+
+    # Work on this!!!
+    def end_game(self, end_condition):
+        for row in range(len(self.buttons)):
+            for col in range(len(self.buttons[row])):
+                self.buttons[row][col].config(state=tk.DISABLED, disabledforeground="#000000")
+
