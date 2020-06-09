@@ -10,7 +10,8 @@ class Menu:
         self.button = tk.Button(self.root, text="Start Game", command=self.start_game)
         self.start_menu()
         self.board = []
-        # This image fixes button size to pixels instead of text
+        self.buttons = []
+        # This "fake" image fixes button size to pixels instead of text
         self.image = tk.PhotoImage(width=1, height=1)
 
     def start_menu(self):
@@ -23,47 +24,39 @@ class Menu:
         # x = 0
         # y = 0
         for i in range(self.board.rows):
+            temp_buttons = []
             for j in range(self.board.columns):
                 button = tk.Button(self.root, image=self.image, bg=self.board.buttons[i][j].color,
                                    width=22, height=22, text=" ", compound="c")
-                button.config(command=lambda btn=button, board_btn=self.board.buttons[i][j]: self.push_button(btn, board_btn))
+                button.config(command=lambda btn=button, board_btn=self.board.buttons[i][j], row=i, col=j: self.reveal_buttons(row, col))
                 button.place(x=self.board.buttons[i][j].x, y=self.board.buttons[i][j].y)
+                temp_buttons.append(button)
+            self.buttons.append(temp_buttons)
 
     def push_button(self, button, board_button):
-        button.config(text=board_button.value, state=tk.DISABLED)
+        button.config(text=board_button.value, state=tk.DISABLED, relief=tk.RIDGE, disabledforeground="#000000")
+        print(button["state"] == tk.DISABLED)
+
+    def reveal_buttons(self, row, col):
+        self.buttons[row][col].config(text=self.board.buttons[row][col].value, state=tk.DISABLED, relief=tk.RIDGE, disabledforeground="#000000")
+
+        if self.board.buttons[row][col].value == " ":
+            for i in range(-1, 2, 1):
+                for j in range(-1, 2, 1):
+                    if 10 > row+i >= 0 and 10 > col+j >= 0 and self.board.buttons[row+i][col+j].value != "X" and self.buttons[row+i][col+j]["state"] != tk.DISABLED:
+                        self.buttons[row+i][col+j].config(text=self.board.buttons[row+i][col+j].value, state=tk.DISABLED, relief=tk.RIDGE, disabledforeground="#000000")
+                        self.reveal_buttons((row+i), (col+j))
 
 
-
-
-
-"""
-def text_objects(text):
-    font = pygame.font.Font('freesansbold.ttf', 16)
-    text_surface = font.render(text, True, (40, 40, 40))
-    return text_surface, text_surface.get_rect()
-
-
-def draw_button(text, window, x, y):
-    pygame.draw.rect(window, (200, 255, 255), (x, y, 60, 30))
-    text_surface, text_rectangle = text_objects(text)
-    text_rectangle.center = (x + (60/2), y + (30/2))
-    window.blit(text_surface, text_rectangle)
-
-
-
-def start_menu(root):
-    
-    window = pygame.display.set_mode((500, 500))
-    pygame.draw.rect(window, (255, 255, 255), (0, 0, 500, 500))
-    draw_button("Hello world", window, 30, 30)
-    pygame.display.update()
-    return window
-    
-    frame = tk.Frame(root, height=500, width=500, bg="white").pack()
-    button = tk.Button(frame, text="Start Game", command=start_game).place(relx=0.45, rely=0.5)
-
-    # pygame.draw.rect(window, (255, 255, 255), (0, 0, 500, 500))
-    # draw_button("Hello world", window, 30, 30)
-    # pygame.display.update()
-    return root
-"""
+    # reference, remove later!
+    def button_value(self, bombs, buttons):
+        for num in bombs:
+            row = num // 10
+            col = num % 10
+            for i in range(-1, 2, 1):
+                for j in range(-1, 2, 1):
+                    if 10 > row+i >= 0 and 10 > col+j >= 0 and buttons[row+i][col+j].value != "X":
+                        if buttons[row+i][col+j].value == " ":
+                            buttons[row+i][col+j].value = 1
+                        else:
+                            buttons[row+i][col+j].value += 1

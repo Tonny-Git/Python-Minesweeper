@@ -10,6 +10,7 @@ class MinesweeperBoard:
         self.columns = columns
         self.buttons = self.create_board()
 
+    # creates an 2:d array with minesweeper_buttons
     def create_board(self):
         bomb_pos = self.bomb_position()
         buttons = []
@@ -28,6 +29,7 @@ class MinesweeperBoard:
         self.button_value(bomb_pos, buttons)
         return buttons
 
+    # Randomizes an array with unique numbers
     def bomb_position(self):
         bombs = []
         i = 0
@@ -38,6 +40,7 @@ class MinesweeperBoard:
                 i += 1
         return bombs
 
+    # Adds value to the buttons surrounding bombs
     def button_value(self, bombs, buttons):
         for num in bombs:
             row = num // 10
