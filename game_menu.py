@@ -6,6 +6,7 @@ from game_setting import Setting
 
 class Menu:
 
+
     def __init__(self, root):
         self.root = root
         self.settings = Setting()
@@ -30,7 +31,7 @@ class Menu:
         for i in range(self.board.rows):
             temp_buttons = []
             for j in range(self.board.columns):
-                button = tk.Button(self.root, image=self.image, bg=self.settings.colors["Button"],
+                button = tk.Button(self.root, image=self.image, bg=self.settings.colors["button"],
                                    width=22, height=22, text=" ", compound="c")
                 button.config(command=lambda btn=button, board_btn=self.board.buttons[i][j], row=i, col=j: self.reveal_buttons(row, col))
                 button.bind("<Button-2>", self.place_flag)
@@ -54,6 +55,7 @@ class Menu:
     # Checks the state of game.
     def game_status_check(self, row, col):
         if self.board.buttons[row][col].value == "X":
+            self.buttons[row][col].config(bg=self.settings.colors["mine"])
             self.end_game("lost")
         else:
             bombs_remaining = len(self.buttons) * len(self.buttons[0]) * 0.1
@@ -66,22 +68,25 @@ class Menu:
             if bombs_remaining == buttons_remaining:
                 self.end_game("won")
 
-    # Work on this!!!
+    # Toggles "flag" color on right/middle click
     def place_flag(self, event):
-        event.widget.configure(bg=self.settings.colors["Flag"])
-        print("right click")
+        if event.widget["bg"] == self.settings.colors["button"] and event.widget["state"] != tk.DISABLED:
+            event.widget.configure(bg=self.settings.colors["flag"])
+        else:
+            event.widget.configure(bg=self.settings.colors["button"])
 
     # Work on this!!!
     def end_game(self, end_condition):
-        for row in range(self.board.rows):
-            for col in range(self.board.columns):
-                self.buttons[row][col].config(state=tk.DISABLED, disabledforeground="#000000")
+
         if end_condition == "won":
-            print("won")
-            pass  # Fix this
+            for row in self.buttons:
+                for button in row:
+                    if button["state"] != tk.DISABLED:
+                        button.config(bg=self.settings.colors["won"])
+            self.disable_all_buttons()
         elif end_condition == "lost":
-            print("lost")
-            pass  # Fix this
+            self.disable_all_buttons()
+            print("lost")  # Fix this
         elif end_condition == "quit":
             for row in range(self.board.rows):
                 for col in range(self.board.columns):
@@ -90,4 +95,7 @@ class Menu:
             self.buttons = []
             self.start_menu()
 
-
+    def disable_all_buttons(self):
+        for row in range(self.board.rows):
+            for col in range(self.board.columns):
+                self.buttons[row][col].config(state=tk.DISABLED, disabledforeground="#000000")
