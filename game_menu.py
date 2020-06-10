@@ -1,12 +1,14 @@
 import tkinter as tk
 
 from minesweeper_board import MinesweeperBoard
+from game_setting import Setting
 
 
 class Menu:
 
     def __init__(self, root):
         self.root = root
+        self.settings = Setting()
         self.button = tk.Button(self.root, text="Start Game", command=self.start_game)
         self.end_button = tk.Button(self.root, text="End Game", command=lambda: self.end_game("quit"))
         self.start_menu()
@@ -28,7 +30,7 @@ class Menu:
         for i in range(self.board.rows):
             temp_buttons = []
             for j in range(self.board.columns):
-                button = tk.Button(self.root, image=self.image, bg=self.board.buttons[i][j].color,
+                button = tk.Button(self.root, image=self.image, bg=self.settings.colors["Button"],
                                    width=22, height=22, text=" ", compound="c")
                 button.config(command=lambda btn=button, board_btn=self.board.buttons[i][j], row=i, col=j: self.reveal_buttons(row, col))
                 button.bind("<Button-2>", self.place_flag)
@@ -66,7 +68,7 @@ class Menu:
 
     # Work on this!!!
     def place_flag(self, event):
-        event.widget.configure(bg="green")
+        event.widget.configure(bg=self.settings.colors["Flag"])
         print("right click")
 
     # Work on this!!!
