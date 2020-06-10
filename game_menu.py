@@ -13,7 +13,7 @@ class Menu:
         self.board = []
         self.buttons = []
         # This "fake" image fixes button size to pixels instead of text
-        self.image = tk.PhotoImage(width=1, height=1)
+        self.image = tk.PhotoImage(width=0, height=1)
 
     def start_menu(self):
         self.button.place(relx=0.45, rely=0.5)
@@ -31,13 +31,11 @@ class Menu:
                 button = tk.Button(self.root, image=self.image, bg=self.board.buttons[i][j].color,
                                    width=22, height=22, text=" ", compound="c")
                 button.config(command=lambda btn=button, board_btn=self.board.buttons[i][j], row=i, col=j: self.reveal_buttons(row, col))
+                button.bind("<Button-2>", self.place_flag)
+                button.bind("<Button-3>", self.place_flag)
                 button.place(x=self.board.buttons[i][j].x, y=self.board.buttons[i][j].y)
                 temp_buttons.append(button)
             self.buttons.append(temp_buttons)
-
-    def push_button(self, button, board_button):
-        button.config(text=board_button.value, state=tk.DISABLED, relief=tk.RIDGE, disabledforeground="#000000")
-        print(button["state"] == tk.DISABLED)
 
     # Reveals the pressed button and if it is empty triggers all around to reveal itself.
     def reveal_buttons(self, row, col):
@@ -54,7 +52,6 @@ class Menu:
     # Checks the state of game.
     def game_status_check(self, row, col):
         if self.board.buttons[row][col].value == "X":
-            print("lost")
             self.end_game("lost")
         else:
             bombs_remaining = len(self.buttons) * len(self.buttons[0]) * 0.1
@@ -65,8 +62,12 @@ class Menu:
                         buttons_remaining += 1
 
             if bombs_remaining == buttons_remaining:
-                print("won")
                 self.end_game("won")
+
+    # Work on this!!!
+    def place_flag(self, event):
+        event.widget.configure(bg="green")
+        print("right click")
 
     # Work on this!!!
     def end_game(self, end_condition):
@@ -74,9 +75,11 @@ class Menu:
             for col in range(self.board.columns):
                 self.buttons[row][col].config(state=tk.DISABLED, disabledforeground="#000000")
         if end_condition == "won":
-            pass
+            print("won")
+            pass  # Fix this
         elif end_condition == "lost":
-            pass
+            print("lost")
+            pass  # Fix this
         elif end_condition == "quit":
             for row in range(self.board.rows):
                 for col in range(self.board.columns):

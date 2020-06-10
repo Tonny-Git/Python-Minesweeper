@@ -1,15 +1,17 @@
-import random
+import tkinter as tk
 
-num = 90
-row = num // 10
-col = num % 10
+def left_click(event):
+    event.widget.configure(bg="green")
 
-for i in range(-1, 2, 1):
-    # row += i
-    # print(row + i)
-    for j in range(-1, 2, 1):
-        # print(i+j)
-        # col += j
-        # print(row+i, col+j)
-        if 10 > row+i >= 0 and 10 > col+j >= 0:
-            print(row+i, col+j)
+def right_click(event):
+    event.widget.configure(bg="red")
+
+root = tk.Tk()
+button = tk.Frame(root, width=20, height=20, background="gray")
+button.pack(padx=20, pady=20)
+
+button.bind("<Button-1>", left_click)
+button.bind("<Button-2>", right_click)
+button.bind("<Button-3>", right_click)
+
+root.mainloop()
