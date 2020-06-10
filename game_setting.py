@@ -2,9 +2,10 @@
 class Setting:
 
     colors = {
-        "Button": "#d4d5d6",
-        "Mine": "Red",
-        "Flag": "Blue"
+        "button": "#d4d5d6",
+        "mine": "Red",
+        "flag": "Blue",
+        "victory": "Green"
     }
 
     def __init__(self):
