@@ -82,7 +82,7 @@ class Menu:
             for row in self.buttons:
                 for button in row:
                     if button["state"] != tk.DISABLED:
-                        button.config(bg=self.settings.colors["won"])
+                        button.config(bg=self.settings.colors["victory"])
             self.disable_all_buttons()
         elif end_condition == "lost":
             self.disable_all_buttons()

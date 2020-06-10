@@ -5,7 +5,7 @@ class Setting:
         "button": "#d4d5d6",
         "mine": "Red",
         "flag": "Blue",
-        "won": "Green"
+        "victory": "Green"
     }
 
     def __init__(self):
