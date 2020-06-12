@@ -12,6 +12,8 @@ class Menu:
         self.settings = Setting()
         self.button = tk.Button(self.root, text="Start Game", command=self.start_game)
         self.end_button = tk.Button(self.root, text="End Game", command=lambda: self.end_game("quit"))
+        self.time_label = tk.Label(self.root, text='')
+        self.time = 0
         self.start_menu()
         self.board = []
         self.buttons = []
@@ -26,6 +28,8 @@ class Menu:
         self.button.place_forget()
         self.end_button.place(relx=0.45, rely=0.9)
         self.board = MinesweeperBoard(10, 10)
+        self.time_label.place(relx=0.9, rely=0.9)
+        self.start_timer()
         # x = 0
         # y = 0
         for i in range(self.board.rows):
@@ -39,6 +43,11 @@ class Menu:
                 button.place(x=self.board.buttons[i][j].x, y=self.board.buttons[i][j].y)
                 temp_buttons.append(button)
             self.buttons.append(temp_buttons)
+
+    def start_timer(self):
+        self.time += 1
+        self.time_label.config(text=self.time)
+        self.root.after(1000, self.start_timer)
 
     # Reveals the pressed button and if it is empty triggers all around to reveal itself.
     def reveal_buttons(self, row, col):
