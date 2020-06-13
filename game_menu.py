@@ -2,7 +2,7 @@ import tkinter as tk
 
 from minesweeper_board import MinesweeperBoard
 from game_setting import Setting
-
+from timer import Timer
 
 class Menu:
 
@@ -12,6 +12,9 @@ class Menu:
         self.settings = Setting()
         self.button = tk.Button(self.root, text="Start Game", command=self.start_game)
         self.end_button = tk.Button(self.root, text="End Game", command=lambda: self.end_game("quit"))
+        # self.time_label = tk.Label(self.root, text='')
+        # self.time = 0
+        self.timer = ""
         self.start_menu()
         self.board = []
         self.buttons = []
@@ -26,6 +29,7 @@ class Menu:
         self.button.place_forget()
         self.end_button.place(relx=0.45, rely=0.9)
         self.board = MinesweeperBoard(10, 10)
+        self.timer = Timer(self.root)
         # x = 0
         # y = 0
         for i in range(self.board.rows):
@@ -77,6 +81,7 @@ class Menu:
 
     # Work on this!!!
     def end_game(self, end_condition):
+        self.timer.isActive = False
 
         if end_condition == "won":
             for row in self.buttons:
@@ -93,6 +98,7 @@ class Menu:
                     self.buttons[row][col].destroy()
             self.end_button.place_forget()
             self.buttons = []
+            self.timer.time_label.destroy()
             self.start_menu()
 
     def disable_all_buttons(self):
