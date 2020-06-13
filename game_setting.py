@@ -8,6 +8,12 @@ class Setting:
         "victory": "Green"
     }
 
+    board_size = {
+        "small": 10,
+        "medium": 15,
+        "large": 20
+    }
+
     def __init__(self):
         pass
 

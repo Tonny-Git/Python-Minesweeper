@@ -14,12 +14,12 @@ class MinesweeperBoard:
     def create_board(self):
         bomb_pos = self.bomb_position()
         buttons = []
-        x = 5
-        y = 5
+        x = 50
+        y = 50
         for i in range(self.rows):
             temp_buttons = []
             for j in range(self.columns):
-                if i*10 + j in bomb_pos:
+                if i*self.rows + j in bomb_pos:
                     button = MinesweeperButton((x + (j * 30)), (y + (i * 30)), "X")
                     temp_buttons.append(button)
                 else:
@@ -43,11 +43,11 @@ class MinesweeperBoard:
     # Adds value to the buttons surrounding bombs
     def button_value(self, bombs, buttons):
         for num in bombs:
-            row = num // 10
-            col = num % 10
+            row = num // self.rows
+            col = num % self.columns
             for i in range(-1, 2, 1):
                 for j in range(-1, 2, 1):
-                    if 10 > row+i >= 0 and 10 > col+j >= 0 and buttons[row+i][col+j].value != "X":
+                    if self.rows > row+i >= 0 and self.columns > col+j >= 0 and buttons[row+i][col+j].value != "X":
                         if buttons[row+i][col+j].value == " ":
                             buttons[row+i][col+j].value = 1
                         else:

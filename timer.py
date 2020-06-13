@@ -11,7 +11,7 @@ class Timer:
         self.start_timer()
 
     def start_timer(self):
-        self.time_label.place(relx=0.9, rely=0.9)
+        self.time_label.place(relx=0.5, rely=0.05)
         self.counter()
 
     def counter(self):

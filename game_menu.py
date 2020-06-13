@@ -28,7 +28,7 @@ class Menu:
     def start_game(self):
         self.button.place_forget()
         self.end_button.place(relx=0.45, rely=0.9)
-        self.board = MinesweeperBoard(10, 10)
+        self.board = MinesweeperBoard(self.settings.board_size["medium"], self.settings.board_size["medium"])  # Fix sizing issues
         self.timer = Timer(self.root)
         # x = 0
         # y = 0
@@ -51,7 +51,7 @@ class Menu:
         if self.board.buttons[row][col].value == " ":
             for i in range(-1, 2, 1):
                 for j in range(-1, 2, 1):
-                    if 10 > row+i >= 0 and 10 > col+j >= 0 and self.board.buttons[row+i][col+j].value != "X" and self.buttons[row+i][col+j]["state"] != tk.DISABLED:
+                    if self.board.rows > row+i >= 0 and self.board.columns > col+j >= 0 and self.board.buttons[row+i][col+j].value != "X" and self.buttons[row+i][col+j]["state"] != tk.DISABLED:
                         self.buttons[row+i][col+j].config(text=self.board.buttons[row+i][col+j].value, state=tk.DISABLED, relief=tk.RIDGE, disabledforeground="#000000")
                         self.reveal_buttons((row+i), (col+j))
         self.game_status_check(row, col)
@@ -101,6 +101,7 @@ class Menu:
             self.timer.time_label.destroy()
             self.start_menu()
 
+    # Disables all minesweeper buttons
     def disable_all_buttons(self):
         for row in range(self.board.rows):
             for col in range(self.board.columns):
