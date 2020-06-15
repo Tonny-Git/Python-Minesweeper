@@ -33,8 +33,8 @@ class MinesweeperBoard:
     def bomb_position(self):
         bombs = []
         i = 0
-        while i < 10:
-            num = random.randrange(0, 100, 1)
+        while i < (self.columns * self.rows // 10):
+            num = random.randrange(0, self.columns * self.rows, 1)
             if num not in bombs:
                 bombs.append(num)
                 i += 1

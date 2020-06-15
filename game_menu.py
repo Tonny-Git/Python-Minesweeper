@@ -28,7 +28,7 @@ class Menu:
     def start_game(self):
         self.button.place_forget()
         self.end_button.place(relx=0.45, rely=0.9)
-        self.board = MinesweeperBoard(self.settings.board_size["medium"], self.settings.board_size["medium"])  # Fix sizing issues
+        self.board = MinesweeperBoard(self.settings.board_size["large"], self.settings.board_size["large"])  # Fix sizing issues
         self.timer = Timer(self.root)
         # x = 0
         # y = 0
@@ -46,13 +46,20 @@ class Menu:
 
     # Reveals the pressed button and if it is empty triggers all around to reveal itself.
     def reveal_buttons(self, row, col):
-        self.buttons[row][col].config(text=self.board.buttons[row][col].value, state=tk.DISABLED, relief=tk.RIDGE, disabledforeground="#000000")
+        self.buttons[row][col].config(
+            text=self.board.buttons[row][col].value, state=tk.DISABLED,
+            relief=tk.RIDGE, disabledforeground="#000000")
 
         if self.board.buttons[row][col].value == " ":
             for i in range(-1, 2, 1):
                 for j in range(-1, 2, 1):
-                    if self.board.rows > row+i >= 0 and self.board.columns > col+j >= 0 and self.board.buttons[row+i][col+j].value != "X" and self.buttons[row+i][col+j]["state"] != tk.DISABLED:
-                        self.buttons[row+i][col+j].config(text=self.board.buttons[row+i][col+j].value, state=tk.DISABLED, relief=tk.RIDGE, disabledforeground="#000000")
+                    if self.board.rows > row+i >= 0 \
+                            and self.board.columns > col+j >= 0 \
+                            and self.board.buttons[row+i][col+j].value != "X" \
+                            and self.buttons[row+i][col+j]["state"] != tk.DISABLED:
+                        self.buttons[row+i][col+j].config(
+                            text=self.board.buttons[row+i][col+j].value,
+                            state=tk.DISABLED, relief=tk.RIDGE, disabledforeground="#000000")
                         self.reveal_buttons((row+i), (col+j))
         self.game_status_check(row, col)
 
@@ -62,7 +69,7 @@ class Menu:
             self.buttons[row][col].config(bg=self.settings.colors["mine"])
             self.end_game("lost")
         else:
-            bombs_remaining = len(self.buttons) * len(self.buttons[0]) * 0.1
+            bombs_remaining = len(self.buttons) * len(self.buttons[0]) // 10
             buttons_remaining = 0
             for row in self.buttons:
                 for button in row:
