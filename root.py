@@ -25,7 +25,7 @@ class Root(tk.Tk):
         self.change_size(500)
         self.end_button.place_forget()
         self.start_button.place(relx=0.5, rely=0.49)
-        self.size_button.place(relx=0.1, rely=0.5)
+        self.size_button.place(relx=0.2, rely=0.5)
         self.size_button.set("Pick a size")
 
     def minesweeper_mode(self):
