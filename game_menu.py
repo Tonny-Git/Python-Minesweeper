@@ -11,23 +11,16 @@ class Menu:
     def __init__(self):
         self.root = Root(self)
         self.settings = Setting()
-        self.end_button = tk.Button(self.root, text="End Game", command=lambda: self.end_game("quit"))
-        # self.time_label = tk.Label(self.root, text='')
-        # self.time = 0
         self.timer = ""
         self.board = []
         self.buttons = []
         # This "fake" image fixes button size to pixels instead of text
         self.image = tk.PhotoImage(width=0, height=1)
 
-    # removes start button and adds minesweeper buttons
-    def start_game(self):
-        self.root.start_button.place_forget()
-        self.end_button.place(relx=0.45, rely=0.9)
-        self.board = MinesweeperBoard(self.settings.board_size["large"], self.settings.board_size["large"])  # Fix sizing issues
+    # adds minesweeper buttons
+    def start_game(self, size):
+        self.board = MinesweeperBoard(self.settings.board_size[size], self.settings.board_size[size])  # Fix sizing issues
         self.timer = Timer(self.root)
-        # x = 0
-        # y = 0
         for i in range(self.board.rows):
             temp_buttons = []
             for j in range(self.board.columns):
@@ -99,7 +92,6 @@ class Menu:
             for row in range(self.board.rows):
                 for col in range(self.board.columns):
                     self.buttons[row][col].destroy()
-            self.end_button.place_forget()
             self.buttons = []
             self.timer.time_label.destroy()
             self.root.main_menu_mode()

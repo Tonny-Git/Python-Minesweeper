@@ -9,9 +9,9 @@ class Setting:
     }
 
     board_size = {
-        "small": 10,
-        "medium": 15,
-        "large": 20
+        "Small": 10,
+        "Medium": 15,
+        "Large": 20
     }
 
     def __init__(self):
