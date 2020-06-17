@@ -6,5 +6,4 @@ class MinesweeperButton:
         self.y = y
         self.width = 25
         self.height = 25
-        # Ska införas senare
         self.value = value

@@ -1,9 +1,9 @@
 import tkinter as tk
 
-from root import Root
-from minesweeper_board import MinesweeperBoard
-from game_setting import Setting
-from timer import Timer
+from Tkinter.root import Root
+from Components.minesweeper_board import MinesweeperBoard
+from Tkinter.game_setting import Setting
+from Components.timer import Timer
 
 
 class Menu:
