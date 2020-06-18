@@ -14,6 +14,8 @@ class Root(tk.Tk):
         self.highscore_button = tk.Button(self.frame, text="Highscore", command=self.highscore_mode)
         self.highscore_return_button = tk.Button(self.frame, text="Return", command=self.return_to_menu)
         self.end_button = tk.Button(self.frame, text="End Game", command=lambda: self.menu.end_game("quit"))
+        self.submit_button = tk.Button(self.frame, text="Submit Highscore", command=self.submit_score)
+        self.submit_entry = tk.Entry(self.frame)
         self.score_labels = []
         self.size_button = ttk.Combobox(self.frame, values=self.size)
         self.main_menu_mode()
@@ -46,6 +48,19 @@ class Root(tk.Tk):
         self.highscore_button.place_forget()
         self.menu.start_game(self.size_button.get())
 
+    def minesweeper_highscore_mode(self):
+        self.end_button.place_forget()
+        self.submit_entry.delete(0, 'end')
+        self.submit_entry.insert(0, "Enter name...")
+        self.submit_entry.place(relx=0.15, rely=0.9)
+        self.submit_button.place(relx=0.15, x=180, rely=0.9)
+
+    def submit_score(self):
+        self.menu.score.handle_value(self.submit_entry.get(), self.menu.timer.time, self.size_button.get().lower())
+        self.submit_entry.place_forget()
+        self.submit_button.place_forget()
+        self.menu.end_game("quit")
+
     def highscore_mode(self):
         self.start_button.place_forget()
         self.size_button.place_forget()
@@ -66,7 +81,7 @@ class Root(tk.Tk):
             size_label.place(relx=0.4, y=120*i)
             self.score_labels.append(size_label)
             for j, label in enumerate(size):
-                label = tk.Label(self.frame, text=f"{j+1}.  {label[1]}  {label[2]}", bg="white")
+                label = tk.Label(self.frame, text=f"{j+1}.   {label[2]}   {label[1]}", bg="white")
                 label.place(relx=0.4, y=120*i + 30*j + 25)
                 self.score_labels.append(label)
 
