@@ -1,14 +1,16 @@
 import tkinter as tk
 
-from root import Root
-from minesweeper_board import MinesweeperBoard
-from game_setting import Setting
-from timer import Timer
+from Tkinter.root import Root
+from Components.minesweeper_board import MinesweeperBoard
+from Tkinter.game_setting import Setting
+from Components.timer import Timer
+from sqlite import Database
 
 
 class Menu:
 
     def __init__(self):
+        self.score = Database()
         self.root = Root(self)
         self.settings = Setting()
         self.timer = ""
@@ -19,7 +21,7 @@ class Menu:
 
     # adds minesweeper buttons
     def start_game(self, size):
-        self.board = MinesweeperBoard(self.settings.board_size[size], self.settings.board_size[size])  # Fix sizing issues
+        self.board = MinesweeperBoard(self.settings.board_size[size], self.settings.board_size[size])
         self.timer = Timer(self.root)
         for i in range(self.board.rows):
             temp_buttons = []
@@ -75,7 +77,7 @@ class Menu:
         else:
             event.widget.configure(bg=self.settings.colors["button"])
 
-    # Work on this!!!
+    # Triggers different things depending on condition
     def end_game(self, end_condition):
         self.timer.isActive = False
 
@@ -85,9 +87,9 @@ class Menu:
                     if button["state"] != tk.DISABLED:
                         button.config(bg=self.settings.colors["victory"])
             self.disable_all_buttons()
+            self.check_highscore()
         elif end_condition == "lost":
             self.disable_all_buttons()
-            print("lost")  # Fix this
         elif end_condition == "quit":
             for row in range(self.board.rows):
                 for col in range(self.board.columns):
@@ -95,6 +97,17 @@ class Menu:
             self.buttons = []
             self.timer.time_label.destroy()
             self.root.main_menu_mode()
+
+    # Checks if current time score is lower then top 3 highscore.
+    def check_highscore(self):
+        scores = self.score.fetch_by_size(self.root.size_button.get().lower())
+        if len(scores) < 3:
+            self.root.minesweeper_highscore_mode()
+            return
+        for score in scores:
+            if self.timer.time < score[2]:
+                self.root.minesweeper_highscore_mode()
+                break
 
     # Disables all minesweeper buttons
     def disable_all_buttons(self):

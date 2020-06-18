@@ -1,4 +1,4 @@
-from game_menu import Menu
+from Tkinter.game_menu import Menu
 
 # This is where the game starts
 menu = Menu()

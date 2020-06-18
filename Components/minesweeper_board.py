@@ -1,6 +1,6 @@
 import random
 
-from minesweeper_button import MinesweeperButton
+from Components.minesweeper_button import MinesweeperButton
 
 
 class MinesweeperBoard:
