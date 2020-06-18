@@ -4,11 +4,13 @@ from Tkinter.root import Root
 from Components.minesweeper_board import MinesweeperBoard
 from Tkinter.game_setting import Setting
 from Components.timer import Timer
+from sqlite import Database
 
 
 class Menu:
 
     def __init__(self):
+        self.score = Database()
         self.root = Root(self)
         self.settings = Setting()
         self.timer = ""

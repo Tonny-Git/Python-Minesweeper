@@ -51,7 +51,6 @@ class Database:
                 c = conn.cursor()
                 c.execute("INSERT INTO score(name, time, size) VALUES (?, ?, ?)", (name, time, size))
             conn.close()
-        # print(self.c.fetchall())
 
     def update_value(self, name, time, id):
         conn = self.connect_to_db()
@@ -88,6 +87,6 @@ class Database:
             conn.close()
 
 
-db = Database()
-db.handle_value("Tonny", 183, "huge")
-print(db.fetch_by_size("huge"))
+# db = Database()
+# db.handle_value("Roger", 182, "huge")
+# print(db.fetch_by_size("huge"))
